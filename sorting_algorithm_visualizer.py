@@ -11,7 +11,11 @@ class DrawInformation:
     GREEN = 0, 255, 0
     RED = 255, 0, 0
     GREY = 128, 128, 128
+    LIGHT_GREY = 160, 160, 160
+    DARK_GREY = 192, 192, 192
     BACKGROUND_COLOR = WHITE
+
+    SHADES_OF_GREY = [GREY, LIGHT_GREY, DARK_GREY]
 
     SIDE_PADDING = 100
     TOP_PADDING = 150
@@ -49,7 +53,22 @@ def generate_initial_list(n, min_value, max_value):
 
 def draw(draw_info):
     draw_info.window.fill(draw_info.BACKGROUND_COLOR)
+    draw_list(draw_info)
     pygame.display.update()
+
+
+# Draw individual blocks
+def draw_list(draw_info):
+    lst = draw_info.lst
+
+    for index, value in enumerate(lst):
+        x = draw_info.start_x + index * draw_info.block_width
+        y = draw_info.height - (value - draw_info.min_value) * draw_info.block_height
+
+        # The order of colors for the blocks is: grey, light grey, dark grey
+        color = draw_info.SHADES_OF_GREY[index % 3]
+
+        pygame.draw.rect(draw_info.window, color, (x, y, draw_info.block_width, draw_info.height))
 
 
 # Pygame event loop
