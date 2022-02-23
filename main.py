@@ -21,16 +21,15 @@ def main():
     # Draw the window
     draw_info = DrawInformation(700, 700, lst)
 
-    sorting = False
-    ascending = True
-
-    # Default algorithm
+    # Default algorithm properties
     algorithm = bubble_sort
     algorithm_name = "Bubble Sort"
     algorithm_generator = None
+    ascending = True
+    sorting = False
 
     while run:
-        clock.tick(100)  # Speed of the algorithm
+        clock.tick(120)  # Speed of the algorithm
 
         if sorting:
             try:
@@ -47,13 +46,13 @@ def main():
             if event.type != pygame.KEYDOWN:
                 continue
 
-            # R --> generate a random list
+            # R --> Generate a random list
             if event.key == pygame.K_r:
                 lst = generate_initial_list(n, min_value, max_value)
                 draw_info.set_list(lst)
                 sorting = False
 
-            # Enter --> start sorting
+            # Enter --> Start sorting
             elif event.key == pygame.K_RETURN and sorting == False:
                 sorting = True
                 algorithm_generator = algorithm(draw_info, ascending)
