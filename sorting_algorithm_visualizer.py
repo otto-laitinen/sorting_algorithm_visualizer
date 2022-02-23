@@ -17,6 +17,8 @@ class DrawInformation:
 
     SHADES_OF_GREY = [GREY, LIGHT_GREY, DARK_GREY]
 
+    FONT = pygame.font.SysFont("comicsans", 15)
+    LARGE_FONT = pygame.font.SysFont("comicsans", 20)
     SIDE_PADDING = 100
     TOP_PADDING = 150
 
@@ -53,6 +55,22 @@ def generate_initial_list(n, min_value, max_value):
 
 def draw(draw_info):
     draw_info.window.fill(draw_info.BACKGROUND_COLOR)
+
+    # Draw controls on the screen
+    controls = draw_info.FONT.render(
+        "R - Reset, | SPACE - Start Sorting | A - Ascending | D - Descending",
+        1,
+        draw_info.BLACK,
+    )
+    # Center
+    draw_info.window.blit(controls, (draw_info.width / 2 - controls.get_width() / 2, 5))
+
+    # Draw sorting options
+    sorting = draw_info.FONT.render(
+        "B - Bubble Sort | I - Insertion Sort", 1, draw_info.BLACK
+    )
+    draw_info.window.blit(sorting, (draw_info.width / 2 - sorting.get_width() / 2, 35))
+
     draw_list(draw_info)
     pygame.display.update()
 
