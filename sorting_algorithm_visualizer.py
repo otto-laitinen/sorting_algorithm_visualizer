@@ -1,7 +1,6 @@
 import pygame
 import random
-
-from bubble_sort import bubble_sort
+import math
 
 pygame.init()
 
@@ -37,7 +36,7 @@ class DrawInformation:
         self.max_value = max(lst)
 
         self.block_width = round((self.width - self.SIDE_PADDING) / len(lst))
-        self.block_height = round(
+        self.block_height = math.floor(
             (self.height - self.TOP_PADDING) / (self.max_value - self.min_value)
         )
         # starting point of blocks on the x-axis:
@@ -82,10 +81,10 @@ def draw_list(draw_info, color_positions={}, clear_bg=False):
 
     if clear_bg:
         clear_block = (
-            draw_info.SIDEPAD // 2,
-            draw_info.TOP_PAD,
-            draw_info.width - draw_info.SIDE_PAD,
-            draw_info.height - draw_info.TOP_PAD,
+            draw_info.SIDE_PADDING // 2,
+            draw_info.TOP_PADDING,
+            draw_info.width - draw_info.SIDE_PADDING,
+            draw_info.height - draw_info.TOP_PADDING,
         )
 
         pygame.draw.rect(draw_info.window, draw_info.BACKGROUND_COLOR, clear_block)
@@ -97,8 +96,8 @@ def draw_list(draw_info, color_positions={}, clear_bg=False):
         # The order of colors for the blocks is: dark grey, grey, light grey
         color = draw_info.SHADES_OF_GREY[index % 3]
 
-        if i in color_positions:
-            color = color_positions[i]
+        if index in color_positions:
+            color = color_positions[index]
 
         pygame.draw.rect(
             draw_info.window, color, (x, y, draw_info.block_width, draw_info.height)
@@ -106,6 +105,22 @@ def draw_list(draw_info, color_positions={}, clear_bg=False):
 
     if clear_bg:
         pygame.display.update()
+
+
+def bubble_sort(draw_info, ascending=True):
+    lst = draw_info.lst
+
+    for i in range(len(lst) - 1):
+        for j in range(len(lst) - 1 - i):
+            num1 = lst[j]
+            num2 = lst[j + 1]
+
+            if (num1 > num2 and ascending) or (num1 < num2 and not ascending):
+                lst[j], lst[j + 1] = lst[j + 1], lst[j]
+                draw_list(draw_info, {j: draw_info.GREEN, j + 1: draw_info.RED}, True)
+                yield True
+
+    return lst
 
 
 # Pygame event loop
@@ -126,7 +141,7 @@ def main():
     sorting = False
     ascending = True
 
-    sorting_algorithm = bubble_sort()
+    sorting_algorithm = bubble_sort
     sorting_algorithm_name = "Bubble Sort"
     sorting_algorithm_generator = None
 
