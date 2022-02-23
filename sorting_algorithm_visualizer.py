@@ -47,6 +47,11 @@ def generate_initial_list(n, min_value, max_value):
     return lst
 
 
+def draw(draw_info):
+    draw_info.window.fill(draw_info.BACKGROUND_COLOR)
+    pygame.display.update()
+
+
 # Pygame event loop
 def main():
     run = True
@@ -65,7 +70,7 @@ def main():
     while run:
         clock.tick(60)  # 60 fps
 
-        pygame.display.update()
+        draw(draw_info)
 
         # Returns a list of occurred events since the last loop
         for event in pygame.event.get():
