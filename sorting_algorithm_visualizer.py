@@ -44,4 +44,3 @@ def generate_initial_list(n, min_value, max_value):
         lst.append(value)
 
     return lst
-
