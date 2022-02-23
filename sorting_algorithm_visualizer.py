@@ -83,7 +83,7 @@ def draw_list(draw_info):
         x = draw_info.start_x + index * draw_info.block_width
         y = draw_info.height - (value - draw_info.min_value) * draw_info.block_height
 
-        # The order of colors for the blocks is: grey, light grey, dark grey
+        # The order of colors for the blocks is: dark grey, grey, light grey
         color = draw_info.SHADES_OF_GREY[index % 3]
 
         pygame.draw.rect(
