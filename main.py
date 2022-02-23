@@ -6,12 +6,12 @@ from generate_list import generate_initial_list
 from bubble_sort import bubble_sort
 from insertion_sort import insertion_sort
 
-# Pygame event loop
+# Event loop
 def main():
     run = True
     clock = pygame.time.Clock()
 
-    n = 50
+    n = 50  # Number of items
     min_value = 0
     max_value = 100
 
@@ -40,9 +40,7 @@ def main():
         else:
             draw(draw_info, algorithm_name, ascending)
 
-        # Returns a list of occurred events since the last loop
         for event in pygame.event.get():
-            # If the user click on the red x on the top right of window
             if event.type == pygame.QUIT:
                 run = False
 
@@ -55,8 +53,8 @@ def main():
                 draw_info.set_list(lst)
                 sorting = False
 
-            # Space --> start sorting
-            elif event.key == pygame.K_SPACE and sorting == False:
+            # Enter --> start sorting
+            elif event.key == pygame.K_RETURN and sorting == False:
                 sorting = True
                 algorithm_generator = algorithm(draw_info, ascending)
 
