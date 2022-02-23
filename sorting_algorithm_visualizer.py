@@ -88,6 +88,9 @@ def main():
     # Draw the window
     draw_info = DrawInformation(700, 700, lst)
 
+    sorting = False
+    ascending = True
+
     while run:
         clock.tick(60)  # 60 fps
 
@@ -102,10 +105,23 @@ def main():
             if event.type != pygame.KEYDOWN:
                 continue
 
-            # If user presses R on keyboard, generate a new random list
+            # R --> generate a new random list
             if event.key == pygame.K_r:
                 lst = generate_initial_list(n, min_value, max_value)
                 draw_info.set_list(lst)
+                sorting = False
+
+            # Space --> start sorting
+            elif event.key == pygame.K_SPACE and sorting == False:
+                sorting = True
+
+            # A --> Ascending order
+            elif event.key == pygame.K_a and sorting == False:
+                ascending = True
+
+            # D --> Descending order
+            elif event.key == pygame.K_d and sorting == False:
+                ascending = False
 
     pygame.quit()
 
