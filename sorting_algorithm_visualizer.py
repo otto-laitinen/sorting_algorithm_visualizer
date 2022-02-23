@@ -68,7 +68,9 @@ def draw_list(draw_info):
         # The order of colors for the blocks is: grey, light grey, dark grey
         color = draw_info.SHADES_OF_GREY[index % 3]
 
-        pygame.draw.rect(draw_info.window, color, (x, y, draw_info.block_width, draw_info.height))
+        pygame.draw.rect(
+            draw_info.window, color, (x, y, draw_info.block_width, draw_info.height)
+        )
 
 
 # Pygame event loop
@@ -96,6 +98,14 @@ def main():
             # If the user click on the red x on the top right of window
             if event.type == pygame.QUIT:
                 run = False
+
+            if event.type != pygame.KEYDOWN:
+                continue
+
+            # If user presses R on keyboard, generate a new random list
+            if event.key == pygame.K_r:
+                lst = generate_initial_list(n, min_value, max_value)
+                draw_info.set_list(lst)
 
     pygame.quit()
 
