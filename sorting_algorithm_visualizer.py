@@ -1,6 +1,7 @@
-from ctypes import create_string_buffer
 import pygame
 import random
+
+from bubble_sort import bubble_sort
 
 pygame.init()
 
@@ -76,8 +77,18 @@ def draw(draw_info):
 
 
 # Draw individual blocks
-def draw_list(draw_info):
+def draw_list(draw_info, color_positions={}, clear_bg=False):
     lst = draw_info.lst
+
+    if clear_bg:
+        clear_block = (
+            draw_info.SIDEPAD // 2,
+            draw_info.TOP_PAD,
+            draw_info.width - draw_info.SIDE_PAD,
+            draw_info.height - draw_info.TOP_PAD,
+        )
+
+        pygame.draw.rect(draw_info.window, draw_info.BACKGROUND_COLOR, clear_block)
 
     for index, value in enumerate(lst):
         x = draw_info.start_x + index * draw_info.block_width
@@ -86,9 +97,15 @@ def draw_list(draw_info):
         # The order of colors for the blocks is: dark grey, grey, light grey
         color = draw_info.SHADES_OF_GREY[index % 3]
 
+        if i in color_positions:
+            color = color_positions[i]
+
         pygame.draw.rect(
             draw_info.window, color, (x, y, draw_info.block_width, draw_info.height)
         )
+
+    if clear_bg:
+        pygame.display.update()
 
 
 # Pygame event loop
@@ -109,10 +126,20 @@ def main():
     sorting = False
     ascending = True
 
+    sorting_algorithm = bubble_sort()
+    sorting_algorithm_name = "Bubble Sort"
+    sorting_algorithm_generator = None
+
     while run:
         clock.tick(60)  # 60 fps
 
-        draw(draw_info)
+        if sorting:
+            try:
+                next(sorting_algorithm_generator)
+            except StopIteration:
+                sorting = False
+        else:
+            draw(draw_info)
 
         # Returns a list of occurred events since the last loop
         for event in pygame.event.get():
@@ -132,6 +159,7 @@ def main():
             # Space --> start sorting
             elif event.key == pygame.K_SPACE and sorting == False:
                 sorting = True
+                sorting_algorithm_generator = sorting_algorithm(draw_info, ascending)
 
             # A --> Ascending order
             elif event.key == pygame.K_a and sorting == False:

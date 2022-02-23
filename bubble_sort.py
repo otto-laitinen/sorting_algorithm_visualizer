@@ -1,3 +1,6 @@
+from sorting_algorithm_visualizer import draw_list
+
+
 def bubble_sort(draw_info, ascending=True):
     lst = draw_info.lst
 
@@ -8,6 +11,7 @@ def bubble_sort(draw_info, ascending=True):
 
             if (num1 > num2 and ascending) or (num1 < num2 and not ascending):
                 lst[j], lst[j + 1] = lst[j + 1], lst[j]
+                draw_list(draw_info, {j: draw_info.GREEN, j + 1: draw_info.RED})
                 yield True
 
     return lst
