@@ -1,3 +1,4 @@
+from ctypes import create_string_buffer
 import pygame
 import random
 
@@ -44,3 +45,36 @@ def generate_initial_list(n, min_value, max_value):
         lst.append(value)
 
     return lst
+
+
+# Pygame event loop
+def main():
+    run = True
+    clock = pygame.time.Clock()
+
+    n = 50
+    min_value = 0
+    max_value = 100
+
+    # Generate initial list
+    lst = generate_initial_list(n, min_value, max_value)
+
+    # Draw the window
+    draw_info = DrawInformation(700, 700, lst)
+
+    while run:
+        clock.tick(60)  # 60 fps
+
+        pygame.display.update()
+
+        # Returns a list of occurred events since the last loop
+        for event in pygame.event.get():
+            # If the user click on the red x on the top right of window
+            if event.type == pygame.QUIT:
+                run = False
+
+    pygame.quit()
+
+
+if __name__ == "__main__":
+    main()
