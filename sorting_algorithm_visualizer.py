@@ -151,7 +151,7 @@ def insertion_sort(draw_info, ascending=True):
         lst[i] = lst[i - 1]
         i = i - 1
         lst[i] = current
-        draw_list(draw_info, {i: draw_info.GREEN, i - 1: draw_info.RED}, True)
+        draw_list(draw_info, {i - 1: draw_info.GREEN, i: draw_info.RED}, True)
         yield True
 
     return lst
@@ -199,7 +199,7 @@ def main():
             if event.type != pygame.KEYDOWN:
                 continue
 
-            # R --> generate a new random list
+            # R --> generate a random list
             if event.key == pygame.K_r:
                 lst = generate_initial_list(n, min_value, max_value)
                 draw_info.set_list(lst)
@@ -217,6 +217,16 @@ def main():
             # D --> Descending order
             elif event.key == pygame.K_d and sorting == False:
                 ascending = False
+
+            # I --> Insertion sort
+            elif event.key == pygame.K_i and sorting == False:
+                algorithm = insertion_sort
+                algorithm_name = "Insertion sort"
+
+            # B --> Bubble sort
+            elif event.key == pygame.K_b and sorting == False:
+                algorithm = bubble_sort
+                algorithm_name = "Bubble sort"
 
     pygame.quit()
 
